@@ -1,8 +1,5 @@
 # Generate-Pano-ID (Google Street View)
 
-Certainly! Here's a README file you can use for your GitHub repository:
-
----
 
 # Street View Map
 
@@ -49,7 +46,3 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 ## License
 
 
-
----
-
-Feel free to customize this README to suit your project's specific details and requirements!
