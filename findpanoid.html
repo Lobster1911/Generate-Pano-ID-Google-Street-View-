@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Street View Map</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #tray {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #map-container {
+            width: 100%;
+            height: calc(100% - 40px);
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 40px;
+            overflow: hidden;
+        }
+
+        #map,
+        #pano {
+            flex: 1;
+            height: 100%;
+        }
+
+        #map {
+            margin-right: 10px;
+        }
+
+        #pano {
+            margin-left: 10px;
+        }
+
+        #resulting {
+            font-weight: bold;
+            color: #333;
+        }
+
+        #resulting a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tray">
+        <button id="doer" onclick="doThings()">Generate PanoID</button>
+        <span id="resulting"></span>
+    </div>
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="pano"></div>
+    </div>
+
+    <script>
+        var panorama, map;
+        var APIkey = "AIzaSyBMN9ctrHpYgYYBPYuCG4w9GKvVDfRUmEQ"; // Replace with your API key
+
+        function initialize() {
+            var fenway = {
+                lat: 42.345573,
+                lng: -71.098326
+            };
+            var agbar = new google.maps.LatLng(-6.2091954658104465, 106.7646693193404);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: agbar,
+                zoom: 14
+            });
+            panorama = new google.maps.StreetViewPanorama(
+                document.getElementById('pano'), {
+                    position: agbar,
+                    pov: {
+                        heading: 34,
+                        pitch: 10
+                    }
+                });
+            map.setStreetView(panorama);
+        }
+
+        function doThings() {
+            console.log("doing things");
+            if (panorama) {
+                document.getElementById("resulting").innerText = "Panorama ID: " + panorama.getPano();
+            } else {
+                console.error("Panorama is not initialized.");
+            }
+        }
+    </script>
+    <script>
+        function loadScript() {
+            var script = document.createElement("script");
+            script.src = "https://maps.googleapis.com/maps/api/js?key=" + APIkey + "&callback=initialize";
+            script.async = true;
+            document.body.appendChild(script);
+        }
+        window.onload = loadScript;
+    </script>
+</body>
+
+</html>
